@@ -3,6 +3,8 @@ import { makeStyles, Grid } from '@material-ui/core';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Ticket from './components/Ticket';
+import PriorityFilter from "./components/PriorityFilter";
+import sortBy from 'lodash/sortBy'
 
 
 const useStyles = makeStyles(() => ({
@@ -38,11 +40,14 @@ export interface TicketProp {
   ]
 }
 
+export type Priority = 'cheap' | 'fast'
+
 
 const App = () => {
   const [searchId, setSearchId] = useState('')
   const [tickets, setTickets] = useState<TicketProp[]>([])  // тип тикетс 
   const [filters, setFilters] = useState<number[]>([])
+  const [active, setActive] = useState<Priority>('cheap')
 
   const classes = useStyles()
 
@@ -68,6 +73,16 @@ const App = () => {
     }
   }, [searchId])
 
+  const setTab = (active: Priority) => {
+    if (active === 'cheap') {
+      setTickets(sortBy(tickets, (ticket) => { return ticket.price }))
+      setActive('cheap')
+    } else {
+        setTickets(sortBy(tickets, (ticket) => { return (ticket.segments[0].duration + ticket.segments[1].duration)}))
+        setActive('fast')
+    }
+  }
+  
 
   const handleChange = (label: number) => {
     if (filters.includes(label)) {
@@ -84,6 +99,8 @@ const App = () => {
     <Grid className={classes.app}>
       <Filters filters={filters} onChange={handleChange} />
       <Grid className={classes.container}>
+      <PriorityFilter  setTab={setTab} active={active}/>
+
         {tickets && 
           filters.length === 0
             ? tickets

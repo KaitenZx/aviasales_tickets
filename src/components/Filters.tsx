@@ -32,10 +32,10 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
                 </Typography>
                 {STOPS.map((label, index) => {
                     return (
-                        <FilterCheckbox label={label} filters={filters} index={index} onChange={onChange} />
+                        <FilterCheckbox label={label} filters={filters} index={index} key={index} onChange={onChange} />
                     )
                 })}  
-            </FormGroup>ß
+            </FormGroup>
         </Paper>
     )
 }
