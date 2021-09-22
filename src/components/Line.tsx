@@ -25,7 +25,7 @@ const Line: FC<LineProps> = ({firstValue, secondValue, isUpperLine}) => {
                     component='p'
                     className={isUpperLine ? classes['ticket__line'] : ''}
                 >
-                    {secondValue} –– {secondValue}
+                    {firstValue} –– {secondValue}
                 </Typography>  
                 ) : (
                 <Typography

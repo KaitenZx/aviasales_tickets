@@ -13,7 +13,7 @@ const DurationBlock: FC<DurationProps> = ({ duration }) => {
     return(
         <Grid className={classes['ticket__block']}>
             <Line firstValue="В ПУТИ" isUpperLine/>
-            <Line firstValue={duration} />
+            <Line firstValue={`${Math.trunc(duration/60)}ч ${duration%60}мин`} />
         </Grid>
     )
 }
